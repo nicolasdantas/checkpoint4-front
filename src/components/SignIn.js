@@ -59,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-console.log(window.innerWidth);
-
 export default function SignInSide() {
   const history = useHistory();
   const classes = useStyles();
