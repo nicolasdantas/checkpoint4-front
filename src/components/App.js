@@ -7,7 +7,10 @@ import Signin from './SignIn';
 import UploadPage from './UploadPage';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+import MyFiles from './MyFiles';
 import MiniDrawer from './Menu';
+import Profile from './Profile';
+import LoginProvider from './Contexts/LoginContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -22,23 +25,27 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <ToastProvider placement="top-right">
-      <ThemeProvider theme={theme}>
-        <Router>
-          <MiniDrawer />
-          <Switch>
-            <Route exact path="/" component={Signin} />
-            <Route exact path="/upload" component={UploadPage} />
-            <Route exact path="/forgot-password" component={ForgotPassword} />
-            <Route
-              exact
-              path="/reset/:userId/:token"
-              component={ResetPassword}
-            />
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </ToastProvider>
+    <LoginProvider>
+      <ToastProvider placement="top-right">
+        <ThemeProvider theme={theme}>
+          <Router>
+            <MiniDrawer />
+            <Switch>
+              <Route exact path="/" component={Signin} />
+              <Route exact path="/upload" component={UploadPage} />
+              <Route exact path="/my-files" component={MyFiles} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/forgot-password" component={ForgotPassword} />
+              <Route
+                exact
+                path="/reset/:userId/:token"
+                component={ResetPassword}
+              />
+            </Switch>
+          </Router>
+        </ThemeProvider>
+      </ToastProvider>
+    </LoginProvider>
   );
 }
 

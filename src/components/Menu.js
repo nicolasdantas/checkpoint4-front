@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,9 +15,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { useHistory, useLocation } from 'react-router-dom';
+import ReplyAllIcon from '@material-ui/icons/ReplyAll';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 import API from '../services/API';
+import { LoginContext } from './Contexts/LoginContext';
 
 const drawerWidth = 240;
 
@@ -86,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer() {
+  const { userLogged } = useContext(LoginContext);
   const history = useHistory();
   const location = useLocation();
   const { addToast } = useToasts();
@@ -144,21 +147,64 @@ export default function MiniDrawer() {
             </IconButton>
           </div>
           <Divider />
+          {userLogged && (
+            <>
+              {open && (
+                <h3 style={{ textAlign: 'center' }}>
+                  Bienvenue {userLogged.user_firstname}
+                </h3>
+              )}
+              <img
+                style={{
+                  width: '40%',
+                  clipPath: 'circle()',
+                  margin: 'auto',
+                  marginTop: 0,
+                  marginBottom: 0,
+                }}
+                src={`${process.env.REACT_APP_API_BASE_URL}/${userLogged.user_image}`}
+                alt={userLogged.user_lastname}
+              />
+            </>
+          )}
           <List>
-            <ListItem button key="Mes fichiers">
-              <ListItemIcon>
-                <AttachFileIcon />
-              </ListItemIcon>
-              <ListItemText primary="Mes fichiers" />
-            </ListItem>
+            <Link
+              to="/upload"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <ListItem button key="Envoyer un fichier">
+                <ListItemIcon>
+                  <ReplyAllIcon />
+                </ListItemIcon>
+                <ListItemText primary="Envoyer un fichier" />
+              </ListItem>
+            </Link>
           </List>
           <List>
-            <ListItem button key="Mes informations">
-              <ListItemIcon>
-                <PermIdentityIcon />
-              </ListItemIcon>
-              <ListItemText primary="Mes informations" />
-            </ListItem>
+            <Link
+              to="/my-files"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <ListItem button key="Mes fichiers">
+                <ListItemIcon>
+                  <AttachFileIcon />
+                </ListItemIcon>
+                <ListItemText primary="Mes fichiers" />
+              </ListItem>
+            </Link>
+          </List>
+          <List>
+            <Link
+              to="/profile"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <ListItem button key="Mes informations">
+                <ListItemIcon>
+                  <PermIdentityIcon />
+                </ListItemIcon>
+                <ListItemText primary="Mes informations" />
+              </ListItem>
+            </Link>
           </List>
           <Divider />
           <List>

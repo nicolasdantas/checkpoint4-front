@@ -51,26 +51,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UploadPage() {
   const { userLogged, setUserLogged } = useContext(LoginContext);
-  useEffect(() => {
-    API.get('/me').then((res) => {
-      setUserLogged(res.data);
-    });
-  }, []);
 
   const classes = useStyles();
   const { addToast } = useToasts();
-  const [recipientEmail, setRecipientEmail] = useState('');
+  const [email, setEmail] = useState(userLogged.user_email);
+  const [lastname, setLastname] = useState(userLogged.user_lastname);
+  const [firstname, setFirstname] = useState(userLogged.user_firstname);
   const [file, setFile] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('recipient', recipientEmail);
-    formData.append('file', file[0]);
-    formData.append('file_expire', '');
-
+    formData.append('user_firstname', firstname);
+    formData.append('user_lastname', lastname);
+    formData.append('user_email', email);
+    // formData.append('file', file[0]);
+    // formData.append('file_expire', '');
     try {
-      await API.post('files', formData);
+      await API.put(`users/${userLogged.user_id}`, formData).then(() =>
+        API.get('/me').then((res) => setUserLogged(res.data))
+      );
       addToast('Fichier envoyé !', {
         appearance: 'success',
         autoDismiss: true,
@@ -95,17 +95,62 @@ export default function UploadPage() {
           variant="h5"
           style={{ marginBottom: '20px' }}
         >
-          Envoyez un fichier !
+          Mes informations personnelles
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '30px',
+            }}
+          >
+            <img
+              style={{
+                width: '40%',
+                clipPath: 'circle()',
+                margin: 'auto',
+                marginTop: 0,
+                marginBottom: 0,
+              }}
+              src={`${process.env.REACT_APP_API_BASE_URL}/${userLogged.user_image}`}
+              alt={userLogged.user_lastname}
+            />
+          </div>
         </Typography>
         <form
           className={classes.form}
           noValidate
           onSubmit={(e) => handleSubmit(e)}
         >
-          <DropzoneArea
+          {/* <DropzoneArea
             onChange={(files) => setFile(files)}
             filesLimit={1}
             dropzoneText="Déposez un fichier ici ou cliquez pour parcourir"
+          /> */}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="firstname"
+            label="Prénom "
+            name="préom"
+            autoComplete="prénom"
+            autoFocus
+            value={firstname}
+            onChange={(event) => setFirstname(event.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastname"
+            label="Nom"
+            name="nom"
+            autoComplete="nom"
+            autoFocus
+            value={lastname}
+            onChange={(event) => setLastname(event.target.value)}
           />
           <TextField
             variant="outlined"
@@ -113,11 +158,12 @@ export default function UploadPage() {
             required
             fullWidth
             id="email"
-            label="Email de votre destinataire"
+            label="Email"
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(event) => setRecipientEmail(event.target.value)}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
           <Button
             type="submit"
