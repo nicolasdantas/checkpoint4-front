@@ -29,9 +29,6 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100vh',
-  },
   image: {
     backgroundImage:
       'linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url("https://cdn.pixabay.com/photo/2017/11/27/21/31/computer-2982270_960_720.jpg")',
@@ -62,6 +59,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+console.log(window.innerWidth);
+
 export default function SignInSide() {
   const history = useHistory();
   const classes = useStyles();
@@ -73,7 +72,11 @@ export default function SignInSide() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const datas = { user_email: userEmail, user_password: userPassword };
+    const datas = {
+      user_email: userEmail,
+      user_password: userPassword,
+      stayConnected,
+    };
     try {
       await API.post('auth/login', datas);
       history.push('/upload');
@@ -90,7 +93,14 @@ export default function SignInSide() {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid
+      container
+      component="main"
+      className={classes.root}
+      style={
+        window.innerWidth < 1000 ? { display: 'flex' } : { display: 'flex' }
+      }
+    >
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image}>
         <div
@@ -112,7 +122,13 @@ export default function SignInSide() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <img src={Logo} alt="logo DaddyTransfer" />
-          <Typography component="h1" variant="h5">
+          <Typography
+            component="h1"
+            variant="h2"
+            style={{
+              fontFamily: 'Teko, sans-serif',
+            }}
+          >
             Connectez-vous
           </Typography>
           <form
@@ -146,12 +162,14 @@ export default function SignInSide() {
               value={userPassword}
               onChange={(event) => setUserPassword(event.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Restez connecté"
-              value={stayConnected}
-              onChange={() => setStayConnected(!stayConnected)}
-            />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Restez connecté"
+                value={stayConnected}
+                onChange={() => setStayConnected(!stayConnected)}
+              />
+            </div>
             <Button
               type="submit"
               fullWidth

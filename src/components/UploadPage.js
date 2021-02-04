@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useContext } from 'react';
 import Button from '@material-ui/core/Button';
@@ -13,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useToasts } from 'react-toast-notifications';
 // import Logo from '../files/DTlogo.png';
 import Container from '@material-ui/core/Container';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import API from '../services/API';
 import Logo from '../files/DTlogo.png';
 import { LoginContext } from './Contexts/LoginContext';
@@ -27,6 +29,24 @@ function Copyright() {
       {new Date().getFullYear()}
       {'.'}
     </Typography>
+  );
+}
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box display="flex" alignItems="center">
+      <Box width="100%" mr={1}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box minWidth={35}>
+        <Typography variant="body2" color="textSecondary">
+          {`${Math.round(
+            // eslint-disable-next-line react/destructuring-assignment
+            props.value
+          )}%`}
+        </Typography>
+      </Box>
+    </Box>
   );
 }
 
@@ -61,6 +81,8 @@ export default function UploadPage() {
   const { addToast } = useToasts();
   const [recipientEmail, setRecipientEmail] = useState('');
   const [file, setFile] = useState([]);
+  const [percentCompleted, setPercentCompleted] = useState(0);
+  const [key, setKey] = useState(0);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,12 +92,22 @@ export default function UploadPage() {
     formData.append('file_expire', '');
 
     try {
-      await API.post('files', formData);
+      await API.post('files', formData, {
+        onUploadProgress: (progressEvent) => {
+          setPercentCompleted(
+            Math.round((progressEvent.loaded * 100) / progressEvent.total)
+          );
+        },
+      });
       addToast('Fichier envoyé !', {
         appearance: 'success',
         autoDismiss: true,
       });
+      e.target.reset();
+      setPercentCompleted(0);
+      setKey(key + 1);
     } catch (err) {
+      setPercentCompleted(0);
       addToast("Erreur durant l'envoi du fichier", {
         appearance: 'error',
         autoDismiss: true,
@@ -84,7 +116,7 @@ export default function UploadPage() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ paddingLeft: '65px' }}>
       <CssBaseline />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <img src={Logo} alt="logo DaddyTransfer" />
@@ -92,8 +124,12 @@ export default function UploadPage() {
       <div className={classes.paper}>
         <Typography
           component="h1"
-          variant="h5"
-          style={{ marginBottom: '20px' }}
+          variant="h2"
+          style={{
+            marginBottom: '20px',
+            fontFamily: 'Teko, sans-serif',
+            textAlign: 'center',
+          }}
         >
           Envoyez un fichier !
         </Typography>
@@ -103,10 +139,17 @@ export default function UploadPage() {
           onSubmit={(e) => handleSubmit(e)}
         >
           <DropzoneArea
+            key={key}
+            maxFileSize={1048576000}
             onChange={(files) => setFile(files)}
             filesLimit={1}
-            dropzoneText="Déposez un fichier ici ou cliquez pour parcourir"
+            dropzoneText="Déposez un fichier ici ou cliquez pour parcourir (maxi 10Mo)"
           />
+
+          <div style={{ margin: '20px' }}>
+            <LinearProgressWithLabel value={percentCompleted} />
+          </div>
+
           <TextField
             variant="outlined"
             margin="normal"

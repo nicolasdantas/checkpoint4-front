@@ -11,13 +11,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ReplyAllIcon from '@material-ui/icons/ReplyAll';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
+import Typography from '@material-ui/core/Typography';
 import API from '../services/API';
 import { LoginContext } from './Contexts/LoginContext';
 
@@ -150,13 +150,22 @@ export default function MiniDrawer() {
           {userLogged && (
             <>
               {open && (
-                <h3 style={{ textAlign: 'center' }}>
+                <Typography
+                  component="h4"
+                  variant="h4"
+                  style={{
+                    marginBottom: '20px',
+                    marginTop: '20px',
+                    fontFamily: 'Teko, sans-serif',
+                    textAlign: 'center',
+                  }}
+                >
                   Bienvenue {userLogged.user_firstname}
-                </h3>
+                </Typography>
               )}
               <img
                 style={{
-                  width: '40%',
+                  width: '50%',
                   clipPath: 'circle()',
                   margin: 'auto',
                   marginTop: 0,
@@ -174,9 +183,17 @@ export default function MiniDrawer() {
             >
               <ListItem button key="Envoyer un fichier">
                 <ListItemIcon>
-                  <ReplyAllIcon />
+                  <ReplyAllIcon style={{ marginLeft: '8px' }} />
                 </ListItemIcon>
-                <ListItemText primary="Envoyer un fichier" />
+                <Typography
+                  component="h5"
+                  variant="h5"
+                  style={{
+                    fontFamily: 'Teko, sans-serif',
+                  }}
+                >
+                  Envoyer un fichier
+                </Typography>
               </ListItem>
             </Link>
           </List>
@@ -187,9 +204,17 @@ export default function MiniDrawer() {
             >
               <ListItem button key="Mes fichiers">
                 <ListItemIcon>
-                  <AttachFileIcon />
+                  <AttachFileIcon style={{ marginLeft: '8px' }} />
                 </ListItemIcon>
-                <ListItemText primary="Mes fichiers" />
+                <Typography
+                  component="h5"
+                  variant="h5"
+                  style={{
+                    fontFamily: 'Teko, sans-serif',
+                  }}
+                >
+                  Mes fichiers
+                </Typography>
               </ListItem>
             </Link>
           </List>
@@ -200,9 +225,17 @@ export default function MiniDrawer() {
             >
               <ListItem button key="Mes informations">
                 <ListItemIcon>
-                  <PermIdentityIcon />
+                  <PermIdentityIcon style={{ marginLeft: '8px' }} />
                 </ListItemIcon>
-                <ListItemText primary="Mes informations" />
+                <Typography
+                  component="h5"
+                  variant="h5"
+                  style={{
+                    fontFamily: 'Teko, sans-serif',
+                  }}
+                >
+                  Mes informations
+                </Typography>
               </ListItem>
             </Link>
           </List>
@@ -210,9 +243,17 @@ export default function MiniDrawer() {
           <List>
             <ListItem button key="Deconnexion" onClick={() => logout()}>
               <ListItemIcon>
-                <ExitToAppIcon />
+                <ExitToAppIcon style={{ marginLeft: '8px' }} />
               </ListItemIcon>
-              <ListItemText primary="Deconnexion" />
+              <Typography
+                component="h5"
+                variant="h5"
+                style={{
+                  fontFamily: 'Teko, sans-serif',
+                }}
+              >
+                Déconnexion
+              </Typography>
             </ListItem>
           </List>
         </Drawer>

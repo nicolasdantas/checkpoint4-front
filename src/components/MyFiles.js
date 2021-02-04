@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Typography from '@material-ui/core/Typography';
 import Logo from '../files/DTlogo.png';
 import API from '../services/API';
 import { LoginContext } from './Contexts/LoginContext';
@@ -41,11 +42,21 @@ export default function DenseTable() {
   };
 
   return (
-    <section style={{ width: '70%', margin: 'auto' }}>
+    <section style={{ width: '70%', margin: 'auto', paddingLeft: '65px' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <img src={Logo} alt="logo DaddyTransfer" />
       </div>
-      <h1 style={{ textAlign: 'center' }}>Mes fichiers envoyés</h1>
+      <Typography
+        component="h1"
+        variant="h2"
+        style={{
+          marginBottom: '20px',
+          fontFamily: 'Teko, sans-serif',
+          textAlign: 'center',
+        }}
+      >
+        Mes fichiers envoyés
+      </Typography>
       <TableContainer component={Paper}>
         <Table
           className={classes.table}
