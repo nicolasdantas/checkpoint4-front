@@ -168,7 +168,7 @@ export default function MiniDrawer() {
                   width: '50%',
                   clipPath: 'circle()',
                   margin: 'auto',
-                  marginTop: 0,
+                  marginTop: '10px',
                   marginBottom: 0,
                 }}
                 src={`${process.env.REACT_APP_API_BASE_URL}/${userLogged.user_image}`}
