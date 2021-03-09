@@ -4,14 +4,10 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
-import { DropzoneArea } from 'material-ui-dropzone';
-// import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useToasts } from 'react-toast-notifications';
-// import Logo from '../files/DTlogo.png';
 import Container from '@material-ui/core/Container';
 import API from '../services/API';
 import Logo from '../files/DTlogo.png';
@@ -78,8 +74,12 @@ export default function ForgotPassword() {
       <div className={classes.paper}>
         <Typography
           component="h1"
-          variant="h5"
-          style={{ marginBottom: '20px', textAlign: 'center' }}
+          variant="h4"
+          style={{
+            marginBottom: '20px',
+            textAlign: 'center',
+            fontFamily: 'Teko, sans-serif',
+          }}
         >
           Demandez un nouveau mot de passe
         </Typography>
