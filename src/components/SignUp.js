@@ -207,7 +207,7 @@ export default function ForgotPassword() {
             maxFileSize={1048576000}
             onChange={(files) => setAvatar(files)}
             filesLimit={1}
-            dropzoneText="Déposez un fichier ici ou cliquez pour parcourir (maxi 10Mo)"
+            dropzoneText="Ajouter un avatar (facultatif)"
           />
           <Button
             type="submit"
