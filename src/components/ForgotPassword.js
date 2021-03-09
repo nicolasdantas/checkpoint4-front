@@ -78,8 +78,12 @@ export default function ForgotPassword() {
       <div className={classes.paper}>
         <Typography
           component="h1"
-          variant="h5"
-          style={{ marginBottom: '20px', textAlign: 'center' }}
+          variant="h4"
+          style={{
+            marginBottom: '20px',
+            textAlign: 'center',
+            fontFamily: 'Teko, sans-serif',
+          }}
         >
           Demandez un nouveau mot de passe
         </Typography>

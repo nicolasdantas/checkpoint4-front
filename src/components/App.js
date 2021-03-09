@@ -4,6 +4,7 @@ import './App.css';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ToastProvider } from 'react-toast-notifications';
 import Signin from './SignIn';
+import Signup from './SignUp';
 import UploadPage from './UploadPage';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
@@ -32,6 +33,7 @@ function App() {
             <MiniDrawer />
             <Switch>
               <Route exact path="/" component={Signin} />
+              <Route exact path="/signup" component={Signup} />
               <Route exact path="/upload" component={UploadPage} />
               <Route exact path="/my-files" component={MyFiles} />
               <Route exact path="/profile" component={Profile} />

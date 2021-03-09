@@ -118,6 +118,7 @@ export default function MiniDrawer() {
 
   return (
     location.pathname !== '/' &&
+    location.pathname !== '/signup' &&
     location.pathname !== '/forgot-password' &&
     !location.pathname.includes('reset') && (
       <div className={classes.root}>
