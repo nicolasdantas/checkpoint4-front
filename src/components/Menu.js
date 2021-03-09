@@ -118,6 +118,7 @@ export default function MiniDrawer() {
 
   return (
     location.pathname !== '/' &&
+    location.pathname !== '/signup' &&
     location.pathname !== '/forgot-password' &&
     !location.pathname.includes('reset') && (
       <div className={classes.root}>
@@ -163,17 +164,19 @@ export default function MiniDrawer() {
                   Bienvenue {userLogged.user_firstname}
                 </Typography>
               )}
-              <img
-                style={{
-                  width: '50%',
-                  clipPath: 'circle()',
-                  margin: 'auto',
-                  marginTop: '10px',
-                  marginBottom: 0,
-                }}
-                src={`${process.env.REACT_APP_API_BASE_URL}/${userLogged.user_image}`}
-                alt={userLogged.user_lastname}
-              />
+              {userLogged.user_image && (
+                <img
+                  style={{
+                    width: '50%',
+                    clipPath: 'circle()',
+                    margin: 'auto',
+                    marginTop: '10px',
+                    marginBottom: 0,
+                  }}
+                  src={`${process.env.REACT_APP_API_BASE_URL}/${userLogged.user_image}`}
+                  alt={userLogged.user_lastname}
+                />
+              )}
             </>
           )}
           <List>

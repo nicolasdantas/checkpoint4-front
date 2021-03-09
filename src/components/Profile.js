@@ -198,17 +198,19 @@ export default function UploadPage() {
                 marginBottom: '20px',
               }}
             >
-              <img
-                style={{
-                  width: '40%',
-                  clipPath: 'circle()',
-                  margin: 'auto',
-                  marginTop: 0,
-                  marginBottom: 0,
-                }}
-                src={`${process.env.REACT_APP_API_BASE_URL}/${avatar}`}
-                alt={lastname}
-              />
+              {avatar && (
+                <img
+                  style={{
+                    width: '40%',
+                    clipPath: 'circle()',
+                    margin: 'auto',
+                    marginTop: 0,
+                    marginBottom: 0,
+                  }}
+                  src={`${process.env.REACT_APP_API_BASE_URL}/${avatar}`}
+                  alt={lastname}
+                />
+              )}
             </div>
             <Grid item xs={12}>
               <Paper className={classes.paper2}>Prénom : {firstname}</Paper>

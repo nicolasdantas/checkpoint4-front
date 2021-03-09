@@ -184,7 +184,7 @@ export default function SignInSide() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="www.google.fr" variant="body2">
+                <Link href="/signup" variant="body2">
                   Créer un compte
                 </Link>
               </Grid>

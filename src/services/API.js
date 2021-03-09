@@ -1,6 +1,5 @@
 import axios, { CancelToken } from 'axios';
 import queryString from 'query-string';
-
 import * as Promise from 'bluebird';
 
 Promise.config({
@@ -72,5 +71,23 @@ export const makeEntityUpdater = (collectionName) => (id, attributes) =>
   makeCancellable('patch', `/${collectionName}/${id}`, attributes).then(
     extractData
   );
+
+instance.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    // eslint-disable-next-line
+    console.log('Error while requesting the API : ', err.response);
+    if (
+      (err.response &&
+        err.response.status === 401 &&
+        window.location.pathname === '/profile') ||
+      window.location.pathname === '/my-files' ||
+      window.location.pathname === '/upload'
+    ) {
+      window.location.replace('/');
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default instance;
